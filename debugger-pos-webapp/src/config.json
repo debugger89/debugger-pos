@@ -1,0 +1,6 @@
+{
+  "DATABASE_SERVER_IP": "localhost",
+  "DATABASE_USER": "admin",
+  "DATABASE_PASSWORD": "1qaz2wsx@",
+  "DATABASE_SCHEMA_NAME": "debuggerpos"
+}
