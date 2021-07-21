@@ -2,6 +2,41 @@ const knex = require("./db-connector");
 const { orderBy } = require("./db-connector");
 
 module.exports = {
+
+  insert_new_product: function (data) {
+    return new Promise(function (resolve, reject) {
+      knex('products')
+        .insert(data)
+        .onConflict("prodid")
+        .merge()
+        .then((rows) => {
+          resolve(rows);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+
+  get_all_products: function () {
+    return new Promise(function (resolve, reject) {
+      knex
+        .select()
+        .from("view_productstocks")
+        .then((rows) => {
+          resolve(rows);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+
+
+
+/////////////////////////////////////////////////////
+
+
   get_all_location_names: function (national_park) {
     return new Promise(function (resolve, reject) {
       knex

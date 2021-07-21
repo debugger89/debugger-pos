@@ -16,6 +16,27 @@ router.get("/", function (req, res, next) {
   res.render("index");
 });
 
+
+router.post("/backend/add-products", function (req, res) {
+  dbWorker
+    .insert_new_product(req.body.data)
+    .then((responseData) => {
+      return res.send({ results: responseData });
+    });
+});
+
+router.post("/backend/get-all-products", function (req, res) {
+  dbWorker
+    .get_all_products()
+    .then((responseData) => {
+      return res.send({ results: responseData });
+    });
+});
+
+
+
+////////////////////////////////////////////////////////////////////////
+
 router.post("/backend/web/get-images-for-leopard", function (req, res) {
   const fs = require("fs");
 
