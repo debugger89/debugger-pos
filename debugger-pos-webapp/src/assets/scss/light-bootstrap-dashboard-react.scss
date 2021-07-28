@@ -14,44 +14,53 @@
 
  */
 
-@import "lbd/variables";
-@import "lbd/mixins";
+@import 'lbd/variables';
+@import 'lbd/mixins';
 
-@import "lbd/typography";
+@import 'lbd/typography';
 
 // Core CSS
-@import "lbd/misc";
-@import "lbd/sidebar-and-main-panel";
-@import "lbd/buttons";
-@import "lbd/inputs";
+@import 'lbd/misc';
+@import 'lbd/sidebar-and-main-panel';
+@import 'lbd/buttons';
+@import 'lbd/inputs';
 
-@import "lbd/alerts";
-@import "lbd/tables";
+@import 'lbd/alerts';
+@import 'lbd/tables';
 
-@import "lbd/checkbox-radio-switch";
-@import "lbd/navbars";
-@import "lbd/footers";
+@import 'lbd/checkbox-radio-switch';
+@import 'lbd/navbars';
+@import 'lbd/footers';
 
 // Fancy Stuff
-@import "lbd/plugins/animate";
-@import "lbd/dropdown";
-@import "lbd/cards";
-@import "lbd/chartist";
-@import "lbd/responsive";
-@import "lbd/bootstrap-switch";
+@import 'lbd/plugins/animate';
+@import 'lbd/dropdown';
+@import 'lbd/cards';
+@import 'lbd/chartist';
+@import 'lbd/responsive';
+@import 'lbd/bootstrap-switch';
 
 // Nucleo Icons
-@import "lbd/partial-nucleo-icons";
+@import 'lbd/partial-nucleo-icons';
 
 // React Differences
-@import "lbdr/react-differences";
+@import 'lbdr/react-differences';
 
-
-.add-stock-icon{
+.add-stock-icon {
     font-size: 30px;
 }
 
-.scrollable-div{
+.scrollable-div {
     overflow-y: scroll;
     height: 500px;
+}
+
+.sale-tab-close-btn {
+}
+.sale-tab-close-btn:hover {
+    color: #d61717;
+}
+
+.product-search-dialog {
+    top: -20%;
 }

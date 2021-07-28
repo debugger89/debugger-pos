@@ -19,7 +19,7 @@ router.get("/", function (req, res, next) {
 
 router.post("/backend/add-products", function (req, res) {
   dbWorker
-    .insert_new_product(req.body.data)
+    .upsert_products(req.body.data)
     .then((responseData) => {
       return res.send({ results: responseData });
     });
@@ -28,6 +28,14 @@ router.post("/backend/add-products", function (req, res) {
 router.post("/backend/get-all-products", function (req, res) {
   dbWorker
     .get_all_products()
+    .then((responseData) => {
+      return res.send({ results: responseData });
+    });
+});
+
+router.post("/backend/add-stocks", function (req, res) {
+  dbWorker
+    .upsert_stocks(req.body.data)
     .then((responseData) => {
       return res.send({ results: responseData });
     });

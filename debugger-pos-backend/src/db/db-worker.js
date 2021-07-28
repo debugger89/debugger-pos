@@ -3,7 +3,7 @@ const { orderBy } = require("./db-connector");
 
 module.exports = {
 
-  insert_new_product: function (data) {
+  upsert_products: function (data) {
     return new Promise(function (resolve, reject) {
       knex('products')
         .insert(data)
@@ -23,6 +23,21 @@ module.exports = {
       knex
         .select()
         .from("view_productstocks")
+        .then((rows) => {
+          resolve(rows);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+
+  upsert_stocks: function (data) {
+    return new Promise(function (resolve, reject) {
+      knex('stocks')
+        .insert(data)
+        .onConflict("stockid")
+        .merge()
         .then((rows) => {
           resolve(rows);
         })

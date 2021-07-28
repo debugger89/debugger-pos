@@ -1,218 +1,165 @@
-import React from "react";
+import React from 'react'
 
 // react-bootstrap components
 import {
-  Badge,
-  Button,
-  Card,
-  Form,
-  Navbar,
-  Nav,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
+    Tabs,
+    Button,
+    Card,
+    Form,
+    Tab,
+    Nav,
+    Container,
+    Row,
+    Col,
+} from 'react-bootstrap'
+import uuid from 'uuid'
+import { UIStore } from '../utils/UIStore'
+import ConfirmationAlert from '../components/Modals/ConfirmationAlert'
+import SaleTabContent from '../components/Tabs/SaleTabContent'
+import CheckOnScreen from '../utils/ComponentMountObserver'
+import SearchSaleProductModal from '../components/Modals/SearchSaleProductModal'
 
 function Sales() {
-  return (
-    <>
-      <Container fluid>
-        <Row>
-          <Col md="8">
-            <Card>
-              <Card.Header>
-                <Card.Title as="h4">Edit Profile</Card.Title>
-              </Card.Header>
-              <Card.Body>
-                <Form>
-                  <Row>
-                    <Col className="pr-1" md="5">
-                      <Form.Group>
-                        <label>Company (disabled)</label>
-                        <Form.Control
-                          defaultValue="Creative Code Inc."
-                          disabled
-                          placeholder="Company"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="px-1" md="3">
-                      <Form.Group>
-                        <label>Username</label>
-                        <Form.Control
-                          defaultValue="michael23"
-                          placeholder="Username"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pl-1" md="4">
-                      <Form.Group>
-                        <label htmlFor="exampleInputEmail1">
-                          Email address
-                        </label>
-                        <Form.Control
-                          placeholder="Email"
-                          type="email"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>First Name</label>
-                        <Form.Control
-                          defaultValue="Mike"
-                          placeholder="Company"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pl-1" md="6">
-                      <Form.Group>
-                        <label>Last Name</label>
-                        <Form.Control
-                          defaultValue="Andrew"
-                          placeholder="Last Name"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <label>Address</label>
-                        <Form.Control
-                          defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                          placeholder="Home Address"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="4">
-                      <Form.Group>
-                        <label>City</label>
-                        <Form.Control
-                          defaultValue="Mike"
-                          placeholder="City"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="px-1" md="4">
-                      <Form.Group>
-                        <label>Country</label>
-                        <Form.Control
-                          defaultValue="Andrew"
-                          placeholder="Country"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pl-1" md="4">
-                      <Form.Group>
-                        <label>Postal Code</label>
-                        <Form.Control
-                          placeholder="ZIP Code"
-                          type="number"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <label>About Me</label>
-                        <Form.Control
-                          cols="80"
-                          defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in
-                          that two seat Lambo."
-                          placeholder="Here can be your description"
-                          rows="4"
-                          as="textarea"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Button
-                    className="btn-fill pull-right"
-                    type="submit"
-                    variant="info"
-                  >
-                    Update Profile
-                  </Button>
-                  <div className="clearfix"></div>
-                </Form>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md="4">
-            <Card className="card-user">
-              <div className="card-image">
-                <img
-                  alt="..."
-                  src={
-                    require("../assets/img/photo-1431578500526-4d9613015464.jpeg")
-                      .default
-                  }
-                ></img>
-              </div>
-              <Card.Body>
-                <div className="author">
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <img
-                      alt="..."
-                      className="avatar border-gray"
-                      src={require("../assets/img/faces/face-3.jpg").default}
-                    ></img>
-                    <h5 className="title">Mike Andrew</h5>
-                  </a>
-                  <p className="description">michael24</p>
-                </div>
-                <p className="description text-center">
-                  "Lamborghini Mercy <br></br>
-                  Your chick she so thirsty <br></br>
-                  I'm in that two seat Lambo"
-                </p>
-              </Card.Body>
-              <hr></hr>
-              <div className="button-container mr-auto ml-auto">
-                <Button
-                  className="btn-simple btn-icon"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  variant="link"
-                >
-                  <i className="fab fa-facebook-square"></i>
-                </Button>
-                <Button
-                  className="btn-simple btn-icon"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  variant="link"
-                >
-                  <i className="fab fa-twitter"></i>
-                </Button>
-                <Button
-                  className="btn-simple btn-icon"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  variant="link"
-                >
-                  <i className="fab fa-google-plus-square"></i>
-                </Button>
-              </div>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
-  );
+    const tabList = UIStore.useState((s) => s.tabList)
+    const currentTabKey = UIStore.useState((s) => s.currentTabKey)
+    const [closingTabId, setClosingTabId] = React.useState(null)
+    const salesScreenRef = React.useRef()
+    const isSalesScreenVisible = CheckOnScreen(salesScreenRef)
+
+    const [searchProductRequested, setSearchProductRequested] =
+        React.useState(false)
+
+    function addNewSaleTab() {
+        var uuidkey = uuid()
+        var newTab = {
+            id: uuidkey,
+            name: 'Sale',
+            content: <SaleTabContent tabId={uuidkey} />,
+        }
+
+        UIStore.update((s) => {
+            s.tabList = [...tabList, newTab]
+            s.currentTabKey = uuidkey
+        })
+    }
+
+    function closeTab(tabId) {
+        setClosingTabId(tabId)
+    }
+
+    function confirmClose() {
+        console.log('OK Closing!!!')
+        console.log('Remove Tab : ' + closingTabId)
+        var filtered = tabList.filter((tab) => tab.id !== closingTabId)
+        console.log('Filtered tabs : ' + JSON.stringify(filtered))
+        UIStore.update((s) => {
+            s.tabList = filtered
+        })
+        setClosingTabId(null)
+    }
+    function cancelClear() {
+        console.log('Cancel Closing!!!')
+        setClosingTabId(null)
+    }
+
+    function finishSearch() {
+        console.log('Closing search modal')
+        setSearchProductRequested(false)
+    }
+
+    function searchForItemManually() {
+        //console.log('is on sales screen? ' + isSalesScreenVisible)
+
+        // TODO: Check if we are in Sales screen..
+
+        // if (isSalesScreenVisible === true) {
+        console.log('CTRL+1 Captured!!')
+        setSearchProductRequested(true)
+        // }
+    }
+
+    React.useEffect(() => {
+        // Add the Ctrl+1 Shortcut for search items
+        document.addEventListener('keydown', function (event) {
+            if (event.ctrlKey && event.key === '1') {
+                searchForItemManually()
+            }
+        })
+        console.log('CTRL+1 Lister added')
+    }, [])
+
+    return (
+        <>
+            <Container fluid>
+                <Card ref={salesScreenRef}>
+                    {/* {isSalesScreenVisible && <p>Im visible </p>} */}
+                    <Card.Header>
+                        <a
+                            href="/"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                addNewSaleTab()
+                            }}
+                        >
+                            <div className="add-stock-icon">
+                                <p>
+                                    <i className="fas fa-plus-circle"></i>
+                                    {' New Sale'}
+                                </p>
+                            </div>
+                        </a>
+                    </Card.Header>
+                    <Card.Body>
+                        <Tabs
+                            activeKey={currentTabKey}
+                            id="uncontrolled-tab-example"
+                            className="mb-3"
+                            onSelect={(k) =>
+                                UIStore.update((s) => {
+                                    s.currentTabKey = k
+                                })
+                            }
+                        >
+                            {tabList.map((tab, index) => {
+                                return (
+                                    <Tab
+                                        key={index}
+                                        eventKey={tab.id}
+                                        title={
+                                            <p>
+                                                {tab.name + ' ' + index + '  '}
+                                                <i
+                                                    className="fas fa-times sale-tab-close-btn"
+                                                    onClick={() =>
+                                                        closeTab(tab.id)
+                                                    }
+                                                ></i>
+                                            </p>
+                                        }
+                                    >
+                                        {tab.content}
+                                    </Tab>
+                                )
+                            })}
+                        </Tabs>
+                    </Card.Body>
+                </Card>
+                {closingTabId && (
+                    <ConfirmationAlert
+                        title="Confirmation?"
+                        message="Do you really want to cancel this sale?"
+                        onOkFunc={confirmClose}
+                        onCancelFunc={cancelClear}
+                    ></ConfirmationAlert>
+                )}
+                {searchProductRequested && (
+                    <SearchSaleProductModal
+                        onOkFunc={finishSearch}
+                    ></SearchSaleProductModal>
+                )}
+            </Container>
+        </>
+    )
 }
 
-export default Sales;
+export default Sales

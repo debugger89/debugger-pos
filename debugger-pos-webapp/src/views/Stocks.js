@@ -1,21 +1,34 @@
 import React from 'react'
 
 // react-bootstrap components
-import { Button, Card, Form, Table, Container, Row, Col } from 'react-bootstrap'
-import ConfirmationAlert from '../components/Alerts/ConfirmationAlert'
+import {
+    Button,
+    Card,
+    Form,
+    Table,
+    Container,
+    Row,
+    Col,
+    InputGroup,
+} from 'react-bootstrap'
+import ConfirmationAlert from '../components/Modals/ConfirmationAlert'
 import { InsertNewProductsPromise } from '../utils/InsertNewProductsPromise'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { showAlert } from '../components/Alerts/NotificationAlerts'
+import { showAlert } from '../components/Modals/NotificationAlerts'
 import { FetchAllProductsPromise } from '../utils/FetchAllProductsPromise'
+import { UpdateStocksPromise } from '../utils/UpdateStocksPromise'
 
 function Stocks() {
-    const [productBarcode, setProductBarcode] = React.useState('1234')
-    const [productName, setProductName] = React.useState('Gold Marie 75g')
-    const [purchasePrice, setPurchasePrice] = React.useState('50')
-    const [sellPrice, setSellPrice] = React.useState('60')
-    const [availableUnits, setAvailableUnits] = React.useState('100')
+    const [productBarcode, setProductBarcode] = React.useState('')
+    const [productName, setProductName] = React.useState('')
+    const [purchasePrice, setPurchasePrice] = React.useState('')
+    const [sellPrice, setSellPrice] = React.useState('')
+    const [availableUnits, setAvailableUnits] = React.useState('')
     const [clearRequested, setClearRequested] = React.useState(false)
+    const [purchaseDate, setPurchaseDate] = React.useState(
+        new Date().toISOString().split('T')[0]
+    )
 
     const [validated, setValidated] = React.useState(false)
     const [productList, setProductList] = React.useState([])
@@ -36,6 +49,7 @@ function Stocks() {
             setProductName('')
             setPurchasePrice('')
             setSellPrice('')
+            setPurchaseDate(new Date().toISOString().split('T')[0])
             setCurrentSelectedProduct(null)
             getAllProducts()
         }
@@ -80,13 +94,34 @@ function Stocks() {
         data.purchasecost = purchasePrice
         data.sellprice = sellPrice
 
+        var stockdata = {}
+        if (currentSelectedProduct.stockid != null) {
+            stockdata.stockid = currentSelectedProduct.stockid
+        }
+        stockdata.quantity = availableUnits
+        stockdata.purchasedate = purchaseDate
+        stockdata.productid = currentSelectedProduct.prodid
+
         InsertNewProductsPromise(data)
             .then((response) => {
                 console.log('Response from DB : ' + JSON.stringify(response))
                 showAlert('Product updated successfully!', 'success')
             })
             .then(() => {
-                getAllProducts()
+                UpdateStocksPromise(stockdata)
+                    .then((response) => {
+                        showAlert('Stock updated successfully!', 'success')
+                    })
+                    .then(() => {
+                        getAllProducts()
+                    })
+                    .catch((err) => {
+                        showAlert(
+                            'Error occurred while trying to update the database. Error : ' +
+                                err,
+                            'error'
+                        )
+                    })
             })
             .catch((err) => {
                 showAlert(
@@ -145,6 +180,16 @@ function Stocks() {
                 setProductName(productList[i].prodname)
                 setPurchasePrice(productList[i].purchasecost)
                 setSellPrice(productList[i].sellprice)
+                setAvailableUnits(
+                    productList[i].quantity ? productList[i].quantity : ''
+                )
+
+                setPurchaseDate(
+                    productList[i].purchasedate
+                        ? productList[i].purchasedate.split('T')[0]
+                        : ''
+                )
+                console.log('ROW purchase date ' + productList[i].purchasedate)
             } else {
                 productList[i].isSelected = false
             }
@@ -498,6 +543,24 @@ function Stocks() {
                                                 ></Form.Control>
                                             </Form.Group>
                                         </Col>
+                                        <Col className="pr-1" md="6">
+                                            <Form.Group>
+                                                <label>Purchase Date</label>
+                                                <Form.Control
+                                                    type="date"
+                                                    value={purchaseDate}
+                                                    onChange={(e) => {
+                                                        console.log(
+                                                            'Purchase Date : ' +
+                                                                e.target.value
+                                                        )
+                                                        setPurchaseDate(
+                                                            e.target.value
+                                                        )
+                                                    }}
+                                                ></Form.Control>
+                                            </Form.Group>
+                                        </Col>
                                     </Row>
 
                                     <Button
@@ -517,7 +580,7 @@ function Stocks() {
                 </Row>
                 {clearRequested && (
                     <ConfirmationAlert
-                        title="Confirmation!"
+                        title="Confirmation?"
                         message="Do you want to clear the form?"
                         onOkFunc={confirmClear}
                         onCancelFunc={cancelClear}
