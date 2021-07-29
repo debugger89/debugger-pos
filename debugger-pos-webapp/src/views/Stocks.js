@@ -104,7 +104,7 @@ function Stocks() {
 
         InsertNewProductsPromise(data)
             .then((response) => {
-                console.log('Response from DB : ' + JSON.stringify(response))
+                // console.log('Response from DB : ' + JSON.stringify(response))
                 showAlert('Product updated successfully!', 'success')
             })
             .then(() => {
@@ -141,7 +141,7 @@ function Stocks() {
 
         InsertNewProductsPromise(data)
             .then((response) => {
-                console.log('Response from DB : ' + JSON.stringify(response))
+                // console.log('Response from DB : ' + JSON.stringify(response))
                 showAlert('Product added successfully!', 'success')
             })
             .then(() => {
@@ -159,7 +159,7 @@ function Stocks() {
     function getAllProducts() {
         FetchAllProductsPromise()
             .then((response) => {
-                console.log('Response from DB : ' + JSON.stringify(response))
+                // console.log('Response from DB : ' + JSON.stringify(response))
                 setProductList(response)
             })
             .catch((err) => {

@@ -1,44 +1,34 @@
 import React from 'react'
 
 // react-bootstrap components
-import {
-    Tabs,
-    Button,
-    Card,
-    Form,
-    Tab,
-    Nav,
-    Container,
-    Row,
-    Col,
-} from 'react-bootstrap'
+import { Tabs, Card, Tab, Container } from 'react-bootstrap'
 import uuid from 'uuid'
 import { UIStore } from '../utils/UIStore'
 import ConfirmationAlert from '../components/Modals/ConfirmationAlert'
 import SaleTabContent from '../components/Tabs/SaleTabContent'
-import CheckOnScreen from '../utils/ComponentMountObserver'
-import SearchSaleProductModal from '../components/Modals/SearchSaleProductModal'
 
 function Sales() {
     const tabList = UIStore.useState((s) => s.tabList)
     const currentTabKey = UIStore.useState((s) => s.currentTabKey)
     const [closingTabId, setClosingTabId] = React.useState(null)
-    const salesScreenRef = React.useRef()
-    const isSalesScreenVisible = CheckOnScreen(salesScreenRef)
 
-    const [searchProductRequested, setSearchProductRequested] =
-        React.useState(false)
+    const saleContent = UIStore.useState((s) => s.saleContent)
 
     function addNewSaleTab() {
         var uuidkey = uuid()
+        console.log('Created Tab ' + uuidkey)
         var newTab = {
             id: uuidkey,
             name: 'Sale',
             content: <SaleTabContent tabId={uuidkey} />,
         }
-
+        //console.log('Current Tabs ' + JSON.stringify(tabList))
+        console.log('Current Sales : ' + JSON.stringify(saleContent))
         UIStore.update((s) => {
             s.tabList = [...tabList, newTab]
+            //s.currentTabKey = uuidkey
+        })
+        UIStore.update((s) => {
             s.currentTabKey = uuidkey
         })
     }
@@ -62,36 +52,10 @@ function Sales() {
         setClosingTabId(null)
     }
 
-    function finishSearch() {
-        console.log('Closing search modal')
-        setSearchProductRequested(false)
-    }
-
-    function searchForItemManually() {
-        //console.log('is on sales screen? ' + isSalesScreenVisible)
-
-        // TODO: Check if we are in Sales screen..
-
-        // if (isSalesScreenVisible === true) {
-        console.log('CTRL+1 Captured!!')
-        setSearchProductRequested(true)
-        // }
-    }
-
-    React.useEffect(() => {
-        // Add the Ctrl+1 Shortcut for search items
-        document.addEventListener('keydown', function (event) {
-            if (event.ctrlKey && event.key === '1') {
-                searchForItemManually()
-            }
-        })
-        console.log('CTRL+1 Lister added')
-    }, [])
-
     return (
         <>
             <Container fluid>
-                <Card ref={salesScreenRef}>
+                <Card>
                     {/* {isSalesScreenVisible && <p>Im visible </p>} */}
                     <Card.Header>
                         <a
@@ -151,11 +115,6 @@ function Sales() {
                         onOkFunc={confirmClose}
                         onCancelFunc={cancelClear}
                     ></ConfirmationAlert>
-                )}
-                {searchProductRequested && (
-                    <SearchSaleProductModal
-                        onOkFunc={finishSearch}
-                    ></SearchSaleProductModal>
                 )}
             </Container>
         </>

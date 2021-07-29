@@ -13,7 +13,7 @@ export const FetchAllProductsPromise = (data) =>
                 return response.json()
             })
             .then((json) => {
-                console.log(JSON.stringify(json))
+                // console.log(JSON.stringify(json))
                 //If no results found, show toast and exit
                 if (json['results'].length === 0) {
                     reject(

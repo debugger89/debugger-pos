@@ -49,7 +49,7 @@ function SearchSaleProductModal({ onOkFunc }) {
     function getAllProducts() {
         FetchAllProductsPromise()
             .then((response) => {
-                console.log('Response from DB : ' + JSON.stringify(response))
+                // console.log('Response from DB : ' + JSON.stringify(response))
                 setProductList(response)
             })
             .catch((err) => {
