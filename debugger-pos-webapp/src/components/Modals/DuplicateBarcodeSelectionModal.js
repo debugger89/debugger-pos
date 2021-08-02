@@ -1,67 +1,40 @@
 import React from 'react'
-
-import { Modal, Row, Button, Col, FormControl, Form } from 'react-bootstrap'
-
 import BootstrapTable from 'react-bootstrap-table-next'
-import { FetchAllProductsPromise } from '../../utils/FetchAllProductsPromise'
-import { showAlert } from '../../components/Modals/NotificationAlerts'
 import ToolkitProvider from 'react-bootstrap-table2-toolkit'
-import { ProductSearchBar } from '../Search/ProductSearchBar'
+import { ProductSearchBarDuplicateBarcode } from '../Search/ProductSearchBarDuplicateBarcode'
 
-function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
-    // const [modalShow, setModalShow] = React.useState(true)
+import { Modal, Row, Button, Col } from 'react-bootstrap'
+// import PosPrinter from
 
-    const [productList, setProductList] = React.useState([])
-
+function DuplicateBarcodeSelectionModal({
+    onOkFunc,
+    onCancelFunc,
+    tabId,
+    productList,
+}) {
+    const [modalShow, setModalShow] = React.useState(true)
+    const handleClose = () => {
+        setModalShow(false)
+        onCancelFunc()
+    }
     var selectedProduct = React.useRef()
 
     const columns = [
         {
-            dataField: 'prodbarcode',
-            text: 'Product Barcode',
-            headerStyle: () => {
-                return { width: '20%' }
-            },
-        },
-        {
             dataField: 'prodname',
             text: 'Product Name',
             headerStyle: () => {
-                return { width: '50%' }
+                return { width: '70%' }
             },
         },
         {
             dataField: 'sellprice',
             text: 'Price/Unit',
             headerStyle: () => {
-                return { width: '15%' }
+                return { width: '30%' }
             },
-            searchable: false,
-        },
-        {
-            dataField: 'remainingstock',
-            text: 'Remaining Stock Units',
-            headerStyle: () => {
-                return { width: '10%' }
-            },
-            searchable: false,
         },
     ]
-
-    function getAllProducts() {
-        FetchAllProductsPromise()
-            .then((response) => {
-                // console.log('Response from DB : ' + JSON.stringify(response))
-                setProductList(response)
-            })
-            .catch((err) => {
-                showAlert(
-                    'Error occurred while trying to fetch data from database. Error : ' +
-                        err,
-                    'error'
-                )
-            })
-    }
 
     function selectProductToAdd() {
         let addRequested = selectedProduct.selectionContext.selected
@@ -72,25 +45,13 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
         onOkFunc(allAddingRows)
     }
 
-    React.useEffect(() => {
-        getAllProducts()
-    }, [])
-
     return (
         <>
-            <Modal
-                show={true}
-                onHide={() => {
-                    //setModalShow(false)
-                    //onOkFunc()
-                }}
-                size="xl"
-                // dialogClassName="product-search-dialog"
-            >
+            <Modal show={modalShow} size="xl" onHide={handleClose}>
                 <Modal.Body>
                     <Row>
                         <Col md="12">
-                            <h2>Search Product</h2>
+                            <h2>Duplicate Product Barcode</h2>
                         </Col>
                     </Row>
 
@@ -106,9 +67,9 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
                                     <div>
                                         <Row>
                                             <Col>
-                                                <ProductSearchBar
+                                                <ProductSearchBarDuplicateBarcode
                                                     {...props.searchProps}
-                                                ></ProductSearchBar>
+                                                ></ProductSearchBarDuplicateBarcode>
                                             </Col>
                                         </Row>
                                         <Row>
@@ -140,7 +101,7 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
                             <Button
                                 //size="sm"
                                 variant="secondary"
-                                onClick={onCancelFunc}
+                                onClick={handleClose}
                             >
                                 Close Search
                             </Button>
@@ -163,4 +124,4 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
     )
 }
 
-export default SearchSaleProductModal
+export default DuplicateBarcodeSelectionModal

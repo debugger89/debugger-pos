@@ -4,12 +4,16 @@
     "main": "public/electron.js",
     "private": true,
     "dependencies": {
+        "@emotion/react": "^11.4.0",
+        "@emotion/styled": "^11.3.0",
         "@fortawesome/fontawesome-free": "5.15.2",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
+        "awesome-react-calculator": "^1.0.9",
         "bootstrap": "4.6.0",
         "chartist": "0.10.1",
+        "electron-pos-printer": "^1.2.4",
         "electron-squirrel-startup": "^1.0.0",
         "immutable": "^4.0.0-rc.12",
         "knex": "^0.95.7",
@@ -29,6 +33,8 @@
         "react-router-dom": "5.2.0",
         "react-scripts": "4.0.3",
         "react-toastify": "^7.0.4",
+        "simple-react-calculator": "^0.1.14",
+        "use-scan-detection": "^0.2.3",
         "web-vitals": "^1.0.1"
     },
     "scripts": {

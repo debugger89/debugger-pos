@@ -32,6 +32,21 @@ module.exports = {
     });
   },
 
+  get_product: function (data) {
+    return new Promise(function (resolve, reject) {
+      knex
+        .select()
+        .from("view_productstocks")
+        .where(data)
+        .then((rows) => {
+          resolve(rows)
+        })
+        .catch((err) => {
+          reject(err) 
+        });
+    });
+  },
+
   upsert_stocks: function (data) {
     return new Promise(function (resolve, reject) {
       knex('stocks')

@@ -26,9 +26,6 @@ function Sales() {
         console.log('Current Sales : ' + JSON.stringify(saleContent))
         UIStore.update((s) => {
             s.tabList = [...tabList, newTab]
-            //s.currentTabKey = uuidkey
-        })
-        UIStore.update((s) => {
             s.currentTabKey = uuidkey
         })
     }
@@ -76,13 +73,14 @@ function Sales() {
                     <Card.Body>
                         <Tabs
                             activeKey={currentTabKey}
-                            id="uncontrolled-tab-example"
+                            //id="uncontrolled-tab-example"
                             className="mb-3"
-                            onSelect={(k) =>
+                            onSelect={(k) => {
                                 UIStore.update((s) => {
                                     s.currentTabKey = k
                                 })
-                            }
+                                console.log('Selected Tab : ' + k)
+                            }}
                         >
                             {tabList.map((tab, index) => {
                                 return (

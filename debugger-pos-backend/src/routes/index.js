@@ -41,6 +41,19 @@ router.post("/backend/add-stocks", function (req, res) {
     });
 });
 
+router.post("/backend/get-product", function (req, res) {
+  let data = req.body.data
+  console.log("*****"+JSON.stringify(data))
+  dbWorker
+    .get_product(data)
+    // .then((responseData) =>{
+    //   console.log(JSON.stringify(responseData))
+    //   return responseData
+    // })
+    .then((responseData) => {
+      return res.send({ results: responseData });
+    });
+});
 
 
 ////////////////////////////////////////////////////////////////////////

@@ -64,3 +64,29 @@
 .product-search-dialog {
     top: -20%;
 }
+
+.sale-screen-pay-col {
+    text-align: right;
+}
+
+.center-col {
+    text-align: center;
+}
+
+.payment-modal-payment-balance {
+    margin-top: 0px;
+    text-align: center;
+}
+
+.sidebar-background-img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.calculator {
+    height: 25rem;
+    width: 100%;
+    clear: both;
+    padding: 0.625em 0 0;
+    overflow: auto;
+}
