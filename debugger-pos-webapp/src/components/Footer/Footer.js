@@ -58,7 +58,7 @@ class Footer extends Component {
                                 </a>
                             </li> */}
                         </ul>
-                        <p className="copyright text-center">
+                        <p className="copyright ">
                             © {new Date().getFullYear()}{' '}
                             <a href="https://github.com/debugger89/debugger-pos">
                                 Debugger Inc
