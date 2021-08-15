@@ -46,6 +46,9 @@
 // React Differences
 @import 'lbdr/react-differences';
 
+// 58mm Receipt CSS
+@import 'receipt.scss';
+
 .add-stock-icon {
     font-size: 30px;
 }
@@ -95,4 +98,9 @@
     margin: 0px 0 0px;
     font-weight: 300;
     color: #d8dbdc;
+}
+
+.bill-preview-container {
+    //width: 50%;
+    overflow-y: auto;
 }
