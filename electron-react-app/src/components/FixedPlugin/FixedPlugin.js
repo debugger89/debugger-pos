@@ -1,0 +1,74 @@
+/*!
+
+=========================================================
+* Light Bootstrap Dashboard React - v2.0.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+/*eslint-disable*/
+import React, { Component } from 'react';
+
+import { Dropdown, Badge, Button, Form } from 'react-bootstrap';
+
+import sideBarImage1 from '../../assets/img/sidebar-1.jpg';
+import sideBarImage2 from '../../assets/img/sidebar-2.jpg';
+import sideBarImage3 from '../../assets/img/sidebar-3.jpg';
+import sideBarImage4 from '../../assets/img/sidebar-4.jpg';
+
+import Calculator from 'awesome-react-calculator';
+
+function FixedPlugin({
+  hasImage,
+  setHasImage,
+  color,
+  setColor,
+  image,
+  setImage,
+}) {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     classes: "dropdown show-dropdown open",
+  //     bg_checked: true,
+  //     bgImage: this.props.bgImage,
+  //   };
+  // }
+  // handleClick = () => {
+  //   this.props.handleFixedClick();
+  // };
+  // onChangeClick = () => {
+  //   this.props.handleHasImage(!this.state.bg_checked);
+  //   this.setState({ bg_checked: !this.state.bg_checked });
+  // };
+
+  return (
+    <div className="fixed-plugin">
+      <Dropdown>
+        <Dropdown.Toggle
+          id="dropdown-fixed-plugin"
+          variant=""
+          className="text-white border-0 opacity-100"
+        >
+          <i className="fas fa-calculator fa-2x mt-1"></i>
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <div className="calculator">
+            <Calculator />
+          </div>
+        </Dropdown.Menu>
+      </Dropdown>
+    </div>
+  );
+}
+
+export default FixedPlugin;

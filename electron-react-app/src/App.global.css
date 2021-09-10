@@ -1,0 +1,10 @@
+/*
+ * @NOTE: Prepend a `~` to css file paths that are in your node_modules
+ *        See https://github.com/webpack-contrib/sass-loader#imports
+ */
+
+@import '~bootstrap/dist/css/bootstrap.css';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import './assets/css/demo.css';
+@import './assets/css/animate.min.css';
+@import './assets/css/light-bootstrap-dashboard-react.css';

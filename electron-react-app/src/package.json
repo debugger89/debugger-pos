@@ -1,0 +1,20 @@
+{
+  "name": "electron-react-boilerplate",
+  "productName": "Debugger POS",
+  "version": "20.8.0",
+  "description": "POS Application developed for small retail businesses. Debugger Inc.",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "Debugger Inc.",
+    "email": "dushmantha.1989@gmail.com",
+    "url": "https://github.com/debugger89/debugger-pos"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "electron-pos-printer": "^1.2.4"
+  }
+}
