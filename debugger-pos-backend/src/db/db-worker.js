@@ -2,10 +2,9 @@ const knex = require("./db-connector");
 const { orderBy } = require("./db-connector");
 
 module.exports = {
-
   upsert_products: function (data) {
     return new Promise(function (resolve, reject) {
-      knex('products')
+      knex("products")
         .insert(data)
         .onConflict("prodid")
         .merge()
@@ -39,17 +38,17 @@ module.exports = {
         .from("view_productstocks")
         .where(data)
         .then((rows) => {
-          resolve(rows)
+          resolve(rows);
         })
         .catch((err) => {
-          reject(err) 
+          reject(err);
         });
     });
   },
 
   upsert_stocks: function (data) {
     return new Promise(function (resolve, reject) {
-      knex('stocks')
+      knex("stocks")
         .insert(data)
         .onConflict("stockid")
         .merge()
@@ -62,10 +61,53 @@ module.exports = {
     });
   },
 
+  insert_sale: function (data) {
+    return new Promise(function (resolve, reject) {
+      knex("sales")
+        .insert(data)
+        .then((rows) => {
+          resolve(rows);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
 
+  insert_sale_items: function (data) {
+    return new Promise(function (resolve, reject) {
+      knex("sale_items")
+        .insert(data)
+        .then((rows) => {
+          resolve(rows);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
 
-/////////////////////////////////////////////////////
+  update_sale_stocks: function (itemData) {
+    return new Promise(function (resolve, reject) {
+      console.log("Updating Stocks: ");
+      console.log(itemData);
+      itemData.forEach(function (item, index) {
+        knex("stocks")
+          .update({
+            quantity: knex.raw("?? - " + item.units, ["quantity"]),
+          })
+          .where("productid", item.productid)
+          .then((rows) => {
+            resolve(rows);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    });
+  },
 
+  /////////////////////////////////////////////////////
 
   get_all_location_names: function (national_park) {
     return new Promise(function (resolve, reject) {
@@ -86,7 +128,13 @@ module.exports = {
   list_leopards_for_filter: function (filters) {
     return new Promise(function (resolve, reject) {
       knex
-        .select("officialnamecode", "nickname", "gender", "leopard_id", "last_seen_date")
+        .select(
+          "officialnamecode",
+          "nickname",
+          "gender",
+          "leopard_id",
+          "last_seen_date"
+        )
         .from("view_combinedsearchdatawithlocations")
         .where(filters["filters"])
         .groupBy("officialnamecode")
@@ -95,7 +143,7 @@ module.exports = {
           resolve(rows);
         })
         .catch((err) => {
-         // console.log(err);
+          // console.log(err);
           reject(err);
         });
     });
@@ -139,7 +187,7 @@ module.exports = {
           resolve(rows);
         })
         .catch((err) => {
-         // console.log(err);
+          // console.log(err);
           reject(err);
         });
     });
@@ -155,7 +203,7 @@ module.exports = {
           resolve(rows);
         })
         .catch((err) => {
-        //  console.log(err);
+          //  console.log(err);
           reject(err);
         });
     });
@@ -171,7 +219,7 @@ module.exports = {
           resolve(rows);
         })
         .catch((err) => {
-         // console.log(err);
+          // console.log(err);
           reject(err);
         });
     });
@@ -187,7 +235,7 @@ module.exports = {
           resolve(rows);
         })
         .catch((err) => {
-         // console.log(err);
+          // console.log(err);
           reject(err);
         });
     });
@@ -203,7 +251,7 @@ module.exports = {
           resolve(rows);
         })
         .catch((err) => {
-       //   console.log(err);
+          //   console.log(err);
           reject(err);
         });
     });
@@ -278,7 +326,7 @@ module.exports = {
           resolve(rows);
         })
         .catch((err) => {
-         // console.log(err);
+          // console.log(err);
           reject(err);
         });
     });
@@ -307,7 +355,7 @@ module.exports = {
           resolve(rows);
         })
         .catch((err) => {
-         // console.log(err);
+          // console.log(err);
           reject(err);
         });
     });

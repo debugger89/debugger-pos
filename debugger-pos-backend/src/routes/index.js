@@ -16,34 +16,27 @@ router.get("/", function (req, res, next) {
   res.render("index");
 });
 
-
 router.post("/backend/add-products", function (req, res) {
-  dbWorker
-    .upsert_products(req.body.data)
-    .then((responseData) => {
-      return res.send({ results: responseData });
-    });
+  dbWorker.upsert_products(req.body.data).then((responseData) => {
+    return res.send({ results: responseData });
+  });
 });
 
 router.post("/backend/get-all-products", function (req, res) {
-  dbWorker
-    .get_all_products()
-    .then((responseData) => {
-      return res.send({ results: responseData });
-    });
+  dbWorker.get_all_products().then((responseData) => {
+    return res.send({ results: responseData });
+  });
 });
 
 router.post("/backend/add-stocks", function (req, res) {
-  dbWorker
-    .upsert_stocks(req.body.data)
-    .then((responseData) => {
-      return res.send({ results: responseData });
-    });
+  dbWorker.upsert_stocks(req.body.data).then((responseData) => {
+    return res.send({ results: responseData });
+  });
 });
 
 router.post("/backend/get-product", function (req, res) {
-  let data = req.body.data
-  console.log("*****"+JSON.stringify(data))
+  let data = req.body.data;
+  console.log("*****" + JSON.stringify(data));
   dbWorker
     .get_product(data)
     // .then((responseData) =>{
@@ -55,6 +48,33 @@ router.post("/backend/get-product", function (req, res) {
     });
 });
 
+router.post("/backend/add-new-sale", function (req, res) {
+  console.log(req.body.data);
+  let sale = { saledate: new Date() };
+  dbWorker.insert_sale(sale).then((responseData) => {
+    console.log("Added Sale : " + responseData);
+    let saleid = responseData[0];
+    let itemData = req.body.data;
+    let itemDataForDB = [];
+    itemData.forEach(function (item, index) {
+      let saleItem = {};
+      saleItem.saleid = saleid;
+      saleItem.unitprice = item.unitprice;
+      saleItem.units = item.units;
+      saleItem.price = item.price;
+      saleItem.productid = item.productid;
+      itemDataForDB = [...itemDataForDB, saleItem];
+    });
+    console.log("Adding Sale Items : " + JSON.stringify(itemDataForDB));
+    dbWorker.insert_sale_items(itemDataForDB).then((responseData) => {
+      dbWorker.update_sale_stocks(itemDataForDB).then((responseData) => {
+        return res.send({ results: responseData });
+      });
+    });
+
+    // return res.send({ results: responseData });
+  });
+});
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -127,61 +147,49 @@ router.post("/backend/web/list-leopards-for-searchquery", function (req, res) {
  * Gets territory information for a given leopard
  *
  */
-router.post(
-  "/backend/web/get-territory-for-leopard",
-  function (req, res) {
-    dbWorker
-      .get_territory_for_leopard(req.body.officialnamecode)
-      .then((responseData) => {
-        return res.send({ matchResults: responseData });
-      });
-  }
-);
+router.post("/backend/web/get-territory-for-leopard", function (req, res) {
+  dbWorker
+    .get_territory_for_leopard(req.body.officialnamecode)
+    .then((responseData) => {
+      return res.send({ matchResults: responseData });
+    });
+});
 
 /**
  * Gets seen area information for a given leopard
  *
  */
-router.post(
-  "/backend/web/get-seen-areas-for-leopard",
-  function (req, res) {
-    dbWorker
-      .get_seen_areas_for_leopard(req.body.officialnamecode)
-      .then((responseData) => {
-        return res.send({ matchResults: responseData });
-      });
-  }
-);
+router.post("/backend/web/get-seen-areas-for-leopard", function (req, res) {
+  dbWorker
+    .get_seen_areas_for_leopard(req.body.officialnamecode)
+    .then((responseData) => {
+      return res.send({ matchResults: responseData });
+    });
+});
 
 /**
  * Gets location coordinate information for a given national park
  *
  */
-router.post(
-  "/backend/web/get-all-location-coordinates",
-  function (req, res) {
-    dbWorker
-      .get_all_locaton_coordinates(req.body.national_park)
-      .then((responseData) => {
-        return res.send({ matchResults: responseData });
-      });
-  }
-);
+router.post("/backend/web/get-all-location-coordinates", function (req, res) {
+  dbWorker
+    .get_all_locaton_coordinates(req.body.national_park)
+    .then((responseData) => {
+      return res.send({ matchResults: responseData });
+    });
+});
 
 /**
  * Get ancestory information for a given leopard id.
  *
  */
-router.post(
-  "/backend/web/get-ancestory-for-leopard",
-  function (req, res) {
-    dbWorker
-      .get_ancestory_for_leopard(req.body.leopard_id)
-      .then((responseData) => {
-        return res.send({ matchResults: responseData });
-      });
-  }
-);
+router.post("/backend/web/get-ancestory-for-leopard", function (req, res) {
+  dbWorker
+    .get_ancestory_for_leopard(req.body.leopard_id)
+    .then((responseData) => {
+      return res.send({ matchResults: responseData });
+    });
+});
 
 /**
  * Get all meta information for a given leopard id.
@@ -353,7 +361,9 @@ router.post(
     //console.log(JSON.stringify(req.body));
     var jsonRequestData = {};
     // jsonRequestData.crop = req.body.crop;
-    var absolute_image_path = path.resolve("cropped_uploaded_files/" + req.params.upload_session_id);
+    var absolute_image_path = path.resolve(
+      "cropped_uploaded_files/" + req.params.upload_session_id
+    );
     jsonRequestData.server_image_path = absolute_image_path;
     jsonRequestData.filtered_leopards = req.body.filtered_leopards;
     // jsonRequestData.scale_factors = req.body.scale_factors;

@@ -3,12 +3,13 @@ import React, { useRef, useCallback } from 'react';
 
 import { Modal, Row, Button, Col, Form } from 'react-bootstrap';
 import ReceiptPreview from '../Receipt/ReceiptPreview';
-import { toPng } from 'html-to-image';
+import { showAlert } from '../Modals/NotificationAlerts'
 import {
   prepareReceiptForPrint,
   printReceipt,
 } from '../../utils/PrinterWorker';
 import { UIStore } from '../../utils/UIStore';
+import { InsertNewSaleDataPromise } from '../../utils/InsertNewSaleDataPromise';
 
 // const { ipcRenderer } = require('electron');
 
@@ -24,8 +25,27 @@ function PaySaleModal({ onOkFunc, tabId, onCancelFunc, saleTotal }) {
 
   function handlePrint() {
     let currentRows = saleContent.get(tabId);
-    let printData = prepareReceiptForPrint(currentRows);
-    printReceipt(printData);
+
+    console.log("Before Print :: saleContent : " + JSON.stringify(currentRows));
+
+    InsertNewSaleDataPromise(currentRows)
+            .then((response) => {
+                console.log('Response from DB : ' + JSON.stringify(response))
+                showAlert('Product updated successfully!', 'success')
+            })
+            .then(() => {
+              let printData = prepareReceiptForPrint(currentRows);
+              printReceipt(printData);
+            })
+            .catch((err) => {
+                showAlert(
+                    'Error occurred while trying to update the database. Error : ' +
+                        err,
+                    'error'
+                )
+            });
+
+
   }
 
   return (

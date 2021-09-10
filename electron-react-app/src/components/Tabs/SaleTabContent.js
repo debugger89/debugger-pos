@@ -71,6 +71,7 @@ function SaleTabContent({ tabId }) {
   function addNewRow() {
     var emptyRowData = {
       id: uuid(),
+      productid : -1,
       name: 'Custom',
       unitprice: 0,
       units: 1,
@@ -116,6 +117,7 @@ function SaleTabContent({ tabId }) {
     for (var i = 0; i < selectedItemsToAdd.length; i++) {
       var newProdAdded = {
         id: uuid(),
+        productid : selectedItemsToAdd[i].productid,
         name: selectedItemsToAdd[i].prodname,
         unitprice: selectedItemsToAdd[i].sellprice,
         units: 1,
@@ -189,9 +191,9 @@ function SaleTabContent({ tabId }) {
     },
   });
 
-  function addNewThroughBarcode() {
+  function addNewThroughBarcode(barcode) {
     console.log('Calling the DB for barcode');
-    FetchBarcodeProductPromise({ prodbarcode: '1234' })
+    FetchBarcodeProductPromise({ prodbarcode: barcode })
       .then((response) => {
         console.log('Response from DB : ' + JSON.stringify(response));
         if (response.length === 1) {
@@ -292,7 +294,7 @@ function SaleTabContent({ tabId }) {
             <Button
               variant="warning"
               className="btn-fill pull-right"
-              onClick={(e) => addNewThroughBarcode()}
+              onClick={(e) => addNewThroughBarcode('1234')}
             >
               MIMIC BARCODE
             </Button>
