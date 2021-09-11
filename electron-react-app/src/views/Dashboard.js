@@ -392,10 +392,6 @@ function Dashboard() {
                   Cost
                 </div>
                 <hr></hr>
-                <div className="stats">
-                  <i className="far fa-clock"></i>
-                  Campaign sent 2 days ago
-                </div>
               </Card.Body>
             </Card>
           </Col>

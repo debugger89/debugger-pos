@@ -87,7 +87,10 @@ export function prepareReceiptForPrint(orderData) {
   let totalUnits = 0;
 
   for (var i = 0; i < orderData.length; i++) {
-    let itemName = orderData[i].name;
+    let itemName =
+      orderData[i].name === undefined
+        ? orderData[i].prodname
+        : orderData[i].name;
     let itemUnitPrice = orderData[i].unitprice;
     let units = orderData[i].units;
     let price = orderData[i].price;
