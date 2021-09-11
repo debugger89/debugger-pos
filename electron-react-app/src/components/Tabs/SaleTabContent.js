@@ -188,11 +188,12 @@ function SaleTabContent({ tabId }) {
   useScanDetection({
     onComplete: (code) => {
       console.log('BARCODE EURAKA!!! : ' + code);
+      addNewThroughBarcode(code)
     },
   });
 
   function addNewThroughBarcode(barcode) {
-    console.log('Calling the DB for barcode');
+    console.log('Calling the DB for barcode : ' + barcode);
     FetchBarcodeProductPromise({ prodbarcode: barcode })
       .then((response) => {
         console.log('Response from DB : ' + JSON.stringify(response));

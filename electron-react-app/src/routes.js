@@ -25,6 +25,7 @@ import Notifications from './views/Notifications.js';
 import Upgrade from './views/Upgrade.js';
 import Sales from './views/Sales.js';
 import Stocks from './views/Stocks.js';
+import SalesHistory from './views/SalesHistory.js';
 
 const dashboardRoutes = [
   {
@@ -32,6 +33,13 @@ const dashboardRoutes = [
     name: 'Sales',
     icon: 'nc-icon nc-cart-simple',
     component: Sales,
+    layout: '/admin',
+  },
+  {
+    path: '/sale-history',
+    name: 'Sales History',
+    icon: 'nc-icon nc-paper-2',
+    component: SalesHistory,
     layout: '/admin',
   },
   {

@@ -50,7 +50,8 @@ router.post("/backend/get-product", function (req, res) {
 
 router.post("/backend/add-new-sale", function (req, res) {
   console.log(req.body.data);
-  let sale = { saledate: new Date() };
+  console.log("Sale Total : " + JSON.stringify(req.body.saletotal));
+  let sale = { saledate: new Date(), saletotal: req.body.saletotal };
   dbWorker.insert_sale(sale).then((responseData) => {
     console.log("Added Sale : " + responseData);
     let saleid = responseData[0];
@@ -73,6 +74,18 @@ router.post("/backend/add-new-sale", function (req, res) {
     });
 
     // return res.send({ results: responseData });
+  });
+});
+
+router.post("/backend/get-all-sales", function (req, res) {
+  dbWorker.get_all_sales().then((responseData) => {
+    return res.send({ results: responseData });
+  });
+});
+
+router.post("/backend/get-sale-items", function (req, res) {
+  dbWorker.get_sale_items(req.body.data).then((responseData) => {
+    return res.send({ results: responseData });
   });
 });
 

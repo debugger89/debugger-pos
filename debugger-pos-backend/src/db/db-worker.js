@@ -107,6 +107,36 @@ module.exports = {
     });
   },
 
+  get_all_sales: function () {
+    return new Promise(function (resolve, reject) {
+      knex
+        .select()
+        .from("sales")
+        .orderBy("saledate", "desc")
+        .then((rows) => {
+          resolve(rows);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+
+  get_sale_items: function (data) {
+    return new Promise(function (resolve, reject) {
+      knex
+        .select()
+        .from("view_saleitems")
+        .where(data)
+        .then((rows) => {
+          resolve(rows);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+
   /////////////////////////////////////////////////////
 
   get_all_location_names: function (national_park) {
