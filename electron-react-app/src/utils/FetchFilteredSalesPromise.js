@@ -1,8 +1,8 @@
 import config from '../config.json';
 
-export const FetchAllSalesPromise = (data) =>
+export const FetchFilteredSalesPromise = (data) =>
   new Promise(function (resolve, reject) {
-    fetch(config.BACKEND_SERVER_API + '/get-all-sales', {
+    fetch(config.BACKEND_SERVER_API + '/get-filtered-sales', {
       method: 'POST',
       body: JSON.stringify({ data: data }),
       headers: {
@@ -10,19 +10,13 @@ export const FetchAllSalesPromise = (data) =>
       },
     })
       .then((response) => {
-        for (var i = 0; i < response.length; i++) {
-          response[i].saledate = new Date(response[i].saledate);
-          console.log('Formatted Date : ' + response[i].saledate);
-        }
         return response.json();
       })
       .then((json) => {
         // console.log(JSON.stringify(json))
         //If no results found, show toast and exit
         if (json['results'].length === 0) {
-          reject(
-            new Error('Unable to fetch product information from database')
-          );
+          reject(new Error('No sale information found in database'));
         } else {
           resolve(json['results']);
         }

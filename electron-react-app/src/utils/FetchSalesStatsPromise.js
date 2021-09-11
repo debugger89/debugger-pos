@@ -1,8 +1,8 @@
 import config from '../config.json';
 
-export const FetchAllSalesPromise = (data) =>
+export const FetchSalesStatsPromise = (data) =>
   new Promise(function (resolve, reject) {
-    fetch(config.BACKEND_SERVER_API + '/get-all-sales', {
+    fetch(config.BACKEND_SERVER_API + '/get-sales-stats', {
       method: 'POST',
       body: JSON.stringify({ data: data }),
       headers: {
@@ -10,10 +10,6 @@ export const FetchAllSalesPromise = (data) =>
       },
     })
       .then((response) => {
-        for (var i = 0; i < response.length; i++) {
-          response[i].saledate = new Date(response[i].saledate);
-          console.log('Formatted Date : ' + response[i].saledate);
-        }
         return response.json();
       })
       .then((json) => {

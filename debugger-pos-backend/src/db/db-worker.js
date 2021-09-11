@@ -122,12 +122,52 @@ module.exports = {
     });
   },
 
+  get_filtered_sales: function (data) {
+    return new Promise(function (resolve, reject) {
+      knex
+        .select()
+        .from("sales")
+        .whereBetween("saledate", [
+          data.fromDate + " 00:00:00",
+          data.toDate + " 23:59:59",
+        ])
+        .orderBy("saledate", "asc")
+        .then((rows) => {
+          resolve(rows);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+
   get_sale_items: function (data) {
     return new Promise(function (resolve, reject) {
       knex
         .select()
         .from("view_saleitems")
         .where(data)
+        .then((rows) => {
+          resolve(rows);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+
+  get_sale_stats: function (data) {
+    console.log("Get stats for " + JSON.stringify(data));
+    return new Promise(function (resolve, reject) {
+      var sql = knex
+        .select()
+        .from("view_saleitems")
+        .whereBetween("saledate", [
+          data.fromDate + " 00:00:00",
+          data.toDate + " 23:59:59",
+        ]);
+      console.log("Generated SQL : " + sql.toString());
+      sql
         .then((rows) => {
           resolve(rows);
         })

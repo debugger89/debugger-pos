@@ -83,8 +83,23 @@ router.post("/backend/get-all-sales", function (req, res) {
   });
 });
 
+router.post("/backend/get-filtered-sales", function (req, res) {
+  dbWorker.get_filtered_sales(req.body.data).then((responseData) => {
+    return res.send({ results: responseData });
+  });
+});
+
 router.post("/backend/get-sale-items", function (req, res) {
   dbWorker.get_sale_items(req.body.data).then((responseData) => {
+    return res.send({ results: responseData });
+  });
+});
+
+router.post("/backend/get-sales-stats", function (req, res) {
+  console.log(
+    "Dahboard data received get-sales-stats : " + JSON.stringify(req.body.data)
+  );
+  dbWorker.get_sale_stats(req.body.data).then((responseData) => {
     return res.send({ results: responseData });
   });
 });

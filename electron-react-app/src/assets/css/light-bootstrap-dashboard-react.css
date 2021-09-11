@@ -5341,4 +5341,11 @@ License - nucleoapp.com/license/
   max-height: 450px;
 }
 
+.dashboard-filter-header {
+  margin: 0px 0 10px;
+}
+.dashboard-filter-header-button {
+  font-weight: 700;
+}
+
 /*# sourceMappingURL=light-bootstrap-dashboard-react.css.map */

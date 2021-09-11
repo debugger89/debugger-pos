@@ -7,6 +7,7 @@ import { SalesSearchBar } from '../components/Search/SalesSearchBar';
 import { FetchAllSalesPromise } from '../utils/FetchAllSalesPromise';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import SearchSaleResultModal from '../components/Modals/SearchSaleResultModal';
+import { showAlert } from '../components/Modals/NotificationAlerts';
 
 function SalesHistory() {
   const [salesList, setSalesList] = React.useState([]);
@@ -56,6 +57,11 @@ function SalesHistory() {
       headerStyle: () => {
         return { width: '30%' };
       },
+      formatter: (cell) => {
+        let dateObj = new Date(cell).toString();
+        dateObj = dateObj.split('GMT')[0];
+        return `${dateObj}`;
+      },
     },
     {
       dataField: 'saletotal',
@@ -69,7 +75,9 @@ function SalesHistory() {
   function getAllSales() {
     FetchAllSalesPromise()
       .then((response) => {
-        console.log('Response from DB Sales : ' + JSON.stringify(response));
+        console.log(
+          'Formatted Response from DB Sales : ' + JSON.stringify(response)
+        );
         setSalesList(response);
       })
       .catch((err) => {
