@@ -11,6 +11,11 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 import { FetchSaleItemsPromise } from '../../utils/FetchSaleItemsPromise';
 import { toast, ToastContainer } from 'react-toastify';
 
+import {
+  prepareReceiptForPrint,
+  printReceipt,
+} from '../../utils/PrinterWorker';
+
 function SearchSaleResultModal({ saleid, onCancelFunc }) {
   // const [modalShow, setModalShow] = React.useState(true)
 
@@ -75,6 +80,13 @@ function SearchSaleResultModal({ saleid, onCancelFunc }) {
       });
   }
 
+  function handlePrint() {
+    let currentRows = productList;
+
+    let printData = prepareReceiptForPrint(currentRows);
+    printReceipt(printData);
+  }
+
   React.useEffect(() => {
     getSaleItems();
   }, []);
@@ -105,13 +117,19 @@ function SearchSaleResultModal({ saleid, onCancelFunc }) {
         </Modal.Body>
         <Modal.Footer>
           <Row>
-            <Col md="12">
+            <Col md="5">
               <Button
                 //size="sm"
                 variant="primary"
                 onClick={onCancelFunc}
               >
-                Close Search
+                Close
+              </Button>
+            </Col>
+            <Col md="2"></Col>
+            <Col md="5">
+              <Button variant="success" onClick={() => handlePrint()}>
+                Print
               </Button>
             </Col>
           </Row>
