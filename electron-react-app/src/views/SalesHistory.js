@@ -8,6 +8,7 @@ import { FetchAllSalesPromise } from '../utils/FetchAllSalesPromise';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import SearchSaleResultModal from '../components/Modals/SearchSaleResultModal';
 import { showAlert } from '../components/Modals/NotificationAlerts';
+import { toast, ToastContainer } from 'react-toastify';
 
 function SalesHistory() {
   const [salesList, setSalesList] = React.useState([]);
@@ -84,7 +85,8 @@ function SalesHistory() {
         showAlert(
           'Error occurred while trying to fetch data from database. Error : ' +
             err,
-          'error'
+          'error',
+          'SalesHistory'
         );
       });
   }
@@ -96,6 +98,11 @@ function SalesHistory() {
   return (
     <>
       <Container fluid>
+        <ToastContainer
+          enableMultiContainer
+          containerId={'SalesHistory'}
+          position={toast.POSITION.TOP_RIGHT}
+        />
         <Row>
           <Col md="12">
             <h2>Search Sales</h2>

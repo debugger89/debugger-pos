@@ -7,6 +7,7 @@ import { FetchAllProductsPromise } from '../../utils/FetchAllProductsPromise';
 import { showAlert } from '../../components/Modals/NotificationAlerts';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min';
 import { ProductSearchBar } from '../Search/ProductSearchBar';
+import { toast, ToastContainer } from 'react-toastify';
 
 function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
   // const [modalShow, setModalShow] = React.useState(true)
@@ -58,7 +59,8 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
         showAlert(
           'Error occurred while trying to fetch data from database. Error : ' +
             err,
-          'error'
+          'error',
+          'SearchSaleProductModal'
         );
       });
   }
@@ -87,6 +89,11 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
         size="xl"
         // dialogClassName="product-search-dialog"
       >
+        <ToastContainer
+          enableMultiContainer
+          containerId={'SearchSaleProductModal'}
+          position={toast.POSITION.TOP_RIGHT}
+        />
         <Modal.Body>
           <Row>
             <Col md="12">

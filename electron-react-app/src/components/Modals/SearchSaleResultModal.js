@@ -9,6 +9,7 @@ import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap
 import { ProductSearchBar } from '../Search/ProductSearchBar';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import { FetchSaleItemsPromise } from '../../utils/FetchSaleItemsPromise';
+import { toast, ToastContainer } from 'react-toastify';
 
 function SearchSaleResultModal({ saleid, onCancelFunc }) {
   // const [modalShow, setModalShow] = React.useState(true)
@@ -68,7 +69,8 @@ function SearchSaleResultModal({ saleid, onCancelFunc }) {
         showAlert(
           'Error occurred while trying to fetch data from database. Error : ' +
             err,
-          'error'
+          'error',
+          'SearchSaleResultModal'
         );
       });
   }
@@ -88,6 +90,11 @@ function SearchSaleResultModal({ saleid, onCancelFunc }) {
         size="xl"
         // dialogClassName="product-search-dialog"
       >
+        <ToastContainer
+          enableMultiContainer
+          containerId={'SearchSaleResultModal'}
+          position={toast.POSITION.TOP_RIGHT}
+        />
         <Modal.Body>
           <BootstrapTable
             keyField="id_sale_items"

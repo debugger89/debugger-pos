@@ -4,6 +4,8 @@ import React, { useRef, useCallback } from 'react';
 import { Modal, Row, Button, Col, Form } from 'react-bootstrap';
 import ReceiptPreview from '../Receipt/ReceiptPreview';
 import { showAlert } from '../Modals/NotificationAlerts';
+import { toast, ToastContainer } from 'react-toastify';
+
 import {
   prepareReceiptForPrint,
   printReceipt,
@@ -32,7 +34,7 @@ function PaySaleModal({ onOkFunc, tabId, onCancelFunc, saleTotal }) {
     InsertNewSaleDataPromise(currentRows, saleTotal)
       .then((response) => {
         console.log('Response from DB : ' + JSON.stringify(response));
-        showAlert('Product updated successfully!', 'success');
+        showAlert('Sale info saved successfully!', 'success', 'PaySaleModal');
       })
       .then(() => {
         let printData = prepareReceiptForPrint(currentRows);
@@ -41,7 +43,8 @@ function PaySaleModal({ onOkFunc, tabId, onCancelFunc, saleTotal }) {
       .catch((err) => {
         showAlert(
           'Error occurred while trying to update the database. Error : ' + err,
-          'error'
+          'error',
+          'PaySaleModal'
         );
       });
   }
@@ -49,6 +52,11 @@ function PaySaleModal({ onOkFunc, tabId, onCancelFunc, saleTotal }) {
   return (
     <>
       <Modal show={modalShow} onHide={handleClose} size="xl">
+        <ToastContainer
+          enableMultiContainer
+          containerId={'PaySaleModal'}
+          position={toast.POSITION.TOP_RIGHT}
+        />
         <Modal.Body>
           <Row>
             <Col md="6">

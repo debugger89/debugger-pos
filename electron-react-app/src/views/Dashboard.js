@@ -18,6 +18,7 @@ import {
 import { FetchSalesStatsPromise } from '../utils/FetchSalesStatsPromise';
 import { showAlert } from '../components/Modals/NotificationAlerts';
 import { FetchFilteredSalesPromise } from '../utils/FetchFilteredSalesPromise';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Dashboard() {
   const [fromDate, setFromDate] = React.useState(getFormattedDate(new Date()));
@@ -62,7 +63,8 @@ function Dashboard() {
         showAlert(
           'Error occurred while trying to fetch data from database. Error : ' +
             err,
-          'error'
+          'error',
+          'Dashboard'
         );
       });
   }
@@ -75,9 +77,12 @@ function Dashboard() {
     var totalItemCount = 0;
     for (var i = 0; i < stats.length; i++) {
       var item = stats[i];
-      var itemRevenue = item.purchasecost - item.unitprice;
-      totalRevenue = totalRevenue + itemRevenue;
-      totalPurchaseCost = totalPurchaseCost + item.purchasecost;
+      var itemRevenue = item.unitprice - item.purchasecost;
+
+      //increment revenue, cost
+      totalRevenue += itemRevenue;
+      totalPurchaseCost += item.purchasecost;
+
       totalSaleAmount = totalSaleAmount + item.price;
       sales.add(item.saleid);
       totalItemCount++;
@@ -126,7 +131,8 @@ function Dashboard() {
         showAlert(
           'Error occurred while trying to fetch data from database. Error : ' +
             err,
-          'error'
+          'error',
+          'Dashboard'
         );
       });
   }
@@ -138,6 +144,11 @@ function Dashboard() {
   return (
     <>
       <Container fluid>
+        <ToastContainer
+          enableMultiContainer
+          containerId={'Dashboard'}
+          position={toast.POSITION.TOP_RIGHT}
+        />
         <Row>
           <Col md="4">
             <h3 className="dashboard-filter-header">Generate Report For</h3>
@@ -377,8 +388,8 @@ function Dashboard() {
                 </div>
                 <div className="legend">
                   <i className="fas fa-circle text-danger"></i>
-                  Cost <i className="fas fa-circle text-info"></i>
-                  Revenue
+                  Revenue <i className="fas fa-circle text-info"></i>
+                  Cost
                 </div>
                 <hr></hr>
                 <div className="stats">
