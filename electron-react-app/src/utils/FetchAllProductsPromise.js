@@ -1,4 +1,5 @@
 import config from '../config.json'
+import uuid from 'uuid';
 
 export const FetchAllProductsPromise = (data) =>
     new Promise(function (resolve, reject) {
@@ -22,7 +23,12 @@ export const FetchAllProductsPromise = (data) =>
                         )
                     )
                 } else {
-                    resolve(json['results'])
+                  let rows = json['results'];
+                  rows.forEach(row => {
+                    row.uuid = uuid()
+                  });
+
+                  resolve(rows)
                 }
             })
             .catch((err) => {

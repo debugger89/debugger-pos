@@ -28,7 +28,7 @@ function PaySaleModal({ onOkFunc, tabId, onCancelFunc, saleTotal }) {
   function handlePrint() {
     let currentRows = saleContent.get(tabId);
 
-    console.log('Before Print :: saleContent : ' + JSON.stringify(currentRows));
+    console.log('Before Print :: saleContents : ' + JSON.stringify(currentRows));
     console.log('Before Print :: saleTotal : ' + saleTotal);
 
     InsertNewSaleDataPromise(currentRows, saleTotal)

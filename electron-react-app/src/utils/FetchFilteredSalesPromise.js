@@ -24,7 +24,7 @@ export const FetchFilteredSalesPromise = (data) =>
       .catch((err) => {
         //console.log("Error captured!!! : " + err);
         reject(
-          new Error('Unable to fetch product information. Error:' + err.message)
+          new Error('Unable to fetch sales information. Error:' + err.message)
         );
       });
   });

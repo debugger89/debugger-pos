@@ -292,20 +292,20 @@ function SaleTabContent({ tabId }) {
             </Row>
           </Col>
           <Col md="6" className="sale-screen-pay-col">
-            <Button
+            {/* <Button
               variant="warning"
               className="btn-fill pull-right"
               onClick={(e) => addNewThroughBarcode('1234')}
             >
               MIMIC BARCODE
-            </Button>
+            </Button> */}
             <Button
               variant="success"
               className="btn-fill pull-right"
               onClick={(e) => setPaymentRequested(true)}
             >
               <i className="fas fa-money-check-alt"></i>
-              {' Pay'}
+              {'  Pay'}
             </Button>
           </Col>
         </Row>

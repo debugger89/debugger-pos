@@ -17,7 +17,7 @@ export const FetchSalesStatsPromise = (data) =>
         //If no results found, show toast and exit
         if (json['results'].length === 0) {
           reject(
-            new Error('Unable to fetch product information from database')
+            new Error('Empty sales statistics in database')
           );
         } else {
           resolve(json['results']);

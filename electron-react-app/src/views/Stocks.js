@@ -175,9 +175,9 @@ function Stocks() {
       });
   }
 
-  function selectExistingProductRow(prodid) {
+  function selectExistingProductRow(uuid) {
     let obj = productList.find((o, i) => {
-      if (o.prodid === prodid) {
+      if (o.uuid === uuid) {
         productList[i].isSelected = true;
         setCurrentSelectedProduct(productList[i]);
         setProductBarcode(productList[i].prodbarcode);
@@ -348,7 +348,7 @@ function Stocks() {
                                   product.isSelected === true ? 'bg-info' : null
                                 }
                                 onClick={() =>
-                                  selectExistingProductRow(product.prodid)
+                                  selectExistingProductRow(product.uuid)
                                 }
                               >
                                 <td>
@@ -430,11 +430,11 @@ function Stocks() {
                       <Form.Group>
                         <label>
                           Purchase Price per unit{' '}
-                          <label className="text-danger">*</label>
+
                         </label>
                         <Form.Control
                           type="number"
-                          required={true}
+                          required={false}
                           value={purchasePrice}
                           onChange={(e) => setPurchasePrice(e.target.value)}
                         ></Form.Control>
@@ -460,11 +460,11 @@ function Stocks() {
                       <Form.Group>
                         <label>
                           Available Stock Units{' '}
-                          <label className="text-danger">*</label>
+
                         </label>
                         <Form.Control
                           type="number"
-                          required={true}
+                          required={false}
                           value={availableUnits}
                           onChange={(e) => setAvailableUnits(e.target.value)}
                         ></Form.Control>

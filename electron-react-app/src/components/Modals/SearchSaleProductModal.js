@@ -8,9 +8,10 @@ import { showAlert } from '../../components/Modals/NotificationAlerts';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min';
 import { ProductSearchBar } from '../Search/ProductSearchBar';
 import { toast, ToastContainer } from 'react-toastify';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 
 function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
-  // const [modalShow, setModalShow] = React.useState(true)
+
 
   const [productList, setProductList] = React.useState([]);
 
@@ -49,10 +50,36 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
     },
   ];
 
+  const paginationOptions = {
+    sizePerPageList: [
+      {
+        text: '10',
+        value: 10,
+      },
+      {
+        text: '20',
+        value: 20,
+      },
+      {
+        text: '30',
+        value: 30,
+      },
+    ],
+  };
+
+  const rowDoubleClickEvent = {
+    onDoubleClick: (e, row, rowIndex) => {
+      // console.log('Double clicked on Row : ' + JSON.stringify(row));
+      // setSelectedSale(row);
+      // setShowSelectedSale(true);
+      selectProductToAdd();
+    },
+  };
+
   function getAllProducts() {
     FetchAllProductsPromise()
       .then((response) => {
-        // console.log('Response from DB : ' + JSON.stringify(response))
+        // console.log('Response from DB AllProducts: ' + JSON.stringify(response))
         setProductList(response);
       })
       .catch((err) => {
@@ -68,9 +95,9 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
   function selectProductToAdd() {
     let addRequested = selectedProduct.selectionContext.selected;
     let allAddingRows = productList.filter((e) =>
-      addRequested.includes(e.stockid)
+      addRequested.includes(e.uuid)
     );
-    // console.log('Selected to be added : ' + JSON.stringify(allAddingRows))
+    console.log('Selected to be added : ' + JSON.stringify(allAddingRows))
     onOkFunc(allAddingRows);
   }
 
@@ -82,19 +109,14 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
     <>
       <Modal
         show={true}
-        onHide={() => {
-          //setModalShow(false)
-          //onOkFunc()
-        }}
+        onHide={onCancelFunc}
         size="xl"
+        centered
+        aria-labelledby="contained-modal-title-vcenter"
         // dialogClassName="product-search-dialog"
       >
-        <ToastContainer
-          enableMultiContainer
-          containerId={'SearchSaleProductModal'}
-          position={toast.POSITION.TOP_RIGHT}
-        />
         <Modal.Body>
+
           <Row>
             <Col md="12">
               <h2>Search Product</h2>
@@ -104,7 +126,7 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
           <Row>
             <Col>
               <ToolkitProvider
-                keyField="stockid"
+                keyField="uuid"
                 data={productList}
                 columns={columns}
                 search
@@ -121,6 +143,7 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
                     <Row>
                       <Col md="12">
                         <BootstrapTable
+                          pagination={paginationFactory(paginationOptions)}
                           {...props.baseProps}
                           striped
                           hover
@@ -130,6 +153,7 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
                             clickToSelect: true,
                           }}
                           ref={(n) => (selectedProduct = n)}
+                          rowEvents={rowDoubleClickEvent}
                         ></BootstrapTable>
                       </Col>
                     </Row>
@@ -138,6 +162,11 @@ function SearchSaleProductModal({ onOkFunc, tabId, onCancelFunc }) {
               </ToolkitProvider>
             </Col>
           </Row>
+          <ToastContainer
+            enableMultiContainer
+            containerId={'SearchSaleProductModal'}
+            position={toast.POSITION.TOP_RIGHT}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Row>
