@@ -15,11 +15,23 @@ const options = {
   silent: true,
 };
 
+function getBillLogoPath(){
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.DEBUG_PROD === 'true'
+  ) {
+    return path.join(__dirname, '/assets/img/M_M Bill Logo.png')
+  }else{
+    let asarUnpackedPath = __dirname.replace ("app.asar", 'assets');
+    return path.join(asarUnpackedPath, '/img/M_M Bill Logo.png')
+  }
+}
+
 export function prepareReceiptForPrint(orderData) {
   var headerData = [
     {
       type: 'image',
-      path: path.join(__dirname, '/assets/img/M_M Bill Logo.png'), // file path
+      path: getBillLogoPath(), // file path
       position: 'center', // position of image: 'left' | 'center' | 'right'
       width: '100px', // width of image in px; default: auto
       height: '60px', // width of image in px; default: 50 or '50px'
@@ -170,6 +182,9 @@ export function prepareReceiptForPrint(orderData) {
 }
 
 export function printReceipt(data) {
+
+  // alert("PATH " + JSON.stringify(path.join(__dirname, '')))
+
   console.log('Print dta from priter: ' + JSON.stringify(data));
   PosPrinter.print(data, options)
     .then(() => {

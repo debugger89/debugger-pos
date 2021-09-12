@@ -5,10 +5,10 @@
 
 @import '~bootstrap/dist/css/bootstrap.css';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
-@import '~react-toastify/dist/ReactToastify.css';
+@import 'react-toastify/dist/ReactToastify.css';
 
-@import '~awesome-react-calculator/es/style/flex.css';
-@import '~awesome-react-calculator/es/style/index.css';
+@import 'awesome-react-calculator/es/style/flex.css';
+@import 'awesome-react-calculator/es/style/index.css';
 
 @import './assets/css/demo.css';
 @import './assets/css/animate.min.css';
