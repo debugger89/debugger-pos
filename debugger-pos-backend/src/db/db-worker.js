@@ -3,6 +3,7 @@ const { orderBy } = require("./db-connector");
 
 module.exports = {
   upsert_products: function (data) {
+    console.log(data);
     return new Promise(function (resolve, reject) {
       knex("products")
         .insert(data)

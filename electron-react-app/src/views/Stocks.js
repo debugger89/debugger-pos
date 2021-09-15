@@ -88,20 +88,25 @@ function Stocks() {
   };
 
   function updateProduct() {
+    console.log(
+      'currentSelectedProduct : ' + JSON.stringify(currentSelectedProduct)
+    );
     var data = {};
-    data.prodid = currentSelectedProduct.prodid;
+    data.prodid = currentSelectedProduct.productid;
     data.prodname = productName;
-    data.prodbarcode = productBarcode;
-    data.purchasecost = purchasePrice;
-    data.sellprice = sellPrice;
+    data.prodbarcode = productBarcode ? productBarcode : null;
+    data.purchasecost = purchasePrice ? purchasePrice : null;
+    data.sellprice = sellPrice ? sellPrice : null;
 
     var stockdata = {};
     if (currentSelectedProduct.stockid != null) {
       stockdata.stockid = currentSelectedProduct.stockid;
     }
-    stockdata.quantity = availableUnits;
-    stockdata.purchasedate = purchaseDate;
-    stockdata.productid = currentSelectedProduct.prodid;
+    stockdata.quantity = availableUnits ? availableUnits : null;
+    stockdata.purchasedate = purchaseDate ? purchaseDate : null;
+    stockdata.productid = currentSelectedProduct.productid
+      ? currentSelectedProduct.productid
+      : null;
 
     InsertNewProductsPromise(data)
       .then((response) => {
@@ -162,7 +167,9 @@ function Stocks() {
   function getAllProducts() {
     FetchAllProductsPromise()
       .then((response) => {
-        // console.log('Response from DB : ' + JSON.stringify(response))
+        console.log(
+          'Response from DB All Products: ' + JSON.stringify(response)
+        );
         setProductList(response);
       })
       .catch((err) => {
@@ -176,14 +183,20 @@ function Stocks() {
   }
 
   function selectExistingProductRow(uuid) {
+    setValidated(false);
     let obj = productList.find((o, i) => {
       if (o.uuid === uuid) {
+        console.log('Selected & Matched Product : ' + JSON.stringify(o));
         productList[i].isSelected = true;
         setCurrentSelectedProduct(productList[i]);
-        setProductBarcode(productList[i].prodbarcode);
-        setProductName(productList[i].prodname);
-        setPurchasePrice(productList[i].purchasecost);
-        setSellPrice(productList[i].sellprice);
+        setProductBarcode(
+          productList[i].prodbarcode ? productList[i].prodbarcode : ''
+        );
+        setProductName(productList[i].prodname ? productList[i].prodname : '');
+        setPurchasePrice(
+          productList[i].purchasecost ? productList[i].purchasecost : ''
+        );
+        setSellPrice(productList[i].sellprice ? productList[i].sellprice : '');
         setAvailableUnits(
           productList[i].quantity ? productList[i].quantity : ''
         );
@@ -198,7 +211,7 @@ function Stocks() {
         productList[i].isSelected = false;
       }
     });
-    console.log('Selected Row : ' + JSON.stringify(obj));
+    // console.log('Selected Row : ' + JSON.stringify(obj));
   }
 
   function searchForProduct() {
@@ -398,13 +411,12 @@ function Stocks() {
                       <Form.Group controlId="validationCustom01">
                         <label>
                           Product Barcode{' '}
-                          <label className="text-danger">*</label>
+                          <label className="text-danger">&nbsp;</label>
                         </label>
                         <Form.Control
                           placeholder="Barcode"
                           type="text"
                           value={productBarcode}
-                          required
                           onChange={(e) => setProductBarcode(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
@@ -429,8 +441,8 @@ function Stocks() {
                     <Col md="6">
                       <Form.Group>
                         <label>
-                          Purchase Price per unit{' '}
-
+                          Purchase Price per unit
+                          <label className="text-danger">&nbsp;</label>
                         </label>
                         <Form.Control
                           type="number"
@@ -458,10 +470,7 @@ function Stocks() {
                   <Row>
                     <Col className="pr-1" md="6">
                       <Form.Group>
-                        <label>
-                          Available Stock Units{' '}
-
-                        </label>
+                        <label>Available Stock Units </label>
                         <Form.Control
                           type="number"
                           required={false}
@@ -490,7 +499,6 @@ function Stocks() {
                     type="submit"
                     variant="warning"
                     size="sm"
-                    // onClick={(e) => saveProduct()}
                   >
                     Save Product
                   </Button>
