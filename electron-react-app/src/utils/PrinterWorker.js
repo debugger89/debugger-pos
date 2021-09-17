@@ -6,7 +6,7 @@ const { PosPrinter } = require('electron').remote.require(
 );
 
 const options = {
-  preview: true, // Preview in window or print
+  preview: false, // Preview in window or print
   width: 200, //  width of content body
   margin: '0 0 0 0', // margin of content body
   copies: 1, // Number of copies to print
