@@ -142,8 +142,8 @@ function Stocks() {
   function saveProduct() {
     var data = {};
     data.prodname = productName;
-    data.prodbarcode = productBarcode;
-    data.purchasecost = purchasePrice;
+    data.prodbarcode = productBarcode ? productBarcode : null;
+    data.purchasecost = purchasePrice ? purchasePrice : null;
     data.sellprice = sellPrice;
 
     InsertNewProductsPromise(data)

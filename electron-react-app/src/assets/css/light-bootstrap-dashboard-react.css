@@ -808,7 +808,7 @@ body > .navbar-collapse[data-color='purple']:after {
 .modal.show .modal-dialog {
   -webkit-transform: translate(0, 30%);
   -o-transform: translate(0, 30%);
-  transform: translate(0, 30%);
+  transform: translate(0, 0%);
 }
 .modal.modal-mini .modal-dialog {
   max-width: 255px;
@@ -5346,6 +5346,15 @@ License - nucleoapp.com/license/
 }
 .dashboard-filter-header-button {
   font-weight: 700;
+}
+
+.search-inputbox {
+  border-color: #d61717;
+  border-width: 3px;
+}
+
+.search-inputbox:focus {
+  border: 2px solid #d61717;
 }
 
 /*# sourceMappingURL=light-bootstrap-dashboard-react.css.map */
